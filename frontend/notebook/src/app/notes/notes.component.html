@@ -1,0 +1,19 @@
+<h2>Create Note</h2>
+<div class="container">
+    
+    <form [formGroup]="notesForm" (ngSubmit)="addNote()">
+      <input formControlName="title" placeholder="Title" />
+      <textarea formControlName="content" placeholder="Content"></textarea>
+      <button type="submit">Add Note</button>
+    </form>
+  
+    <ul>
+      <li *ngFor="let note of notes">
+        <h3>{{ note.title }}</h3>
+        <p>{{ note.content }}</p>
+        <button (click)="updateNote(note)">Update</button>
+        <button (click)="deleteNote(note.id)">Delete</button>
+      </li>
+    </ul>
+  </div>
+  
