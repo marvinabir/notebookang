@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class NotesService {
-  private apiUrl = 'http://localhost:3000/api/notes';
+  private apiUrl = 'http://localhost:3000/notes';
 
   constructor(private http: HttpClient) {}
 
@@ -18,9 +18,9 @@ export class NotesService {
     return this.http.post(this.apiUrl, note);
   }
 
-  updateNote(note: any): Observable<any> {
-    return this.http.put(`${this.apiUrl}/${note.id}`, note);
-  }
+  // updateNote(note: any, updatedNote: { title: string; content: string; }): Observable<any> {
+  //   return this.http.put(`${this.apiUrl}/${note.id}`, note);
+  // }
 
   deleteNote(id: number): Observable<any> {
     return this.http.delete(`${this.apiUrl}/${id}`);

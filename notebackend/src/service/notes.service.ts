@@ -1,7 +1,6 @@
 import sql from 'mssql';
-import { config } from '../database/config'
+import { config } from '../database/config';
 import { Request, Response } from 'express';
-import { Note, notes} from '../interface/note';
 
 const poolPromise = new sql.ConnectionPool(config)
   .connect()
@@ -9,10 +8,13 @@ const poolPromise = new sql.ConnectionPool(config)
     console.log('Connected to MSSQL');
     return pool;
   })
-  .catch(err => console.log('Database Connection Failed! Bad Config: ', err));
+  .catch(err => {
+    console.log('Database Connection Failed! Bad Config: ', err);
+    throw err; // re-throw error to ensure poolPromise is never undefined
+  });
 
 export const getAllNotes = async () => {
-  const pool = new sql.ConnectionPool(config)
+  const pool = await poolPromise;
   const result = await pool.request().query('SELECT * FROM Notes');
   return result.recordset;
 };
